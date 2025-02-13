@@ -1,0 +1,228 @@
+1. Which artist did they listen to the most this year? Is it the same as last year?
+
+Syntax used:
+STRFTIME
+DATE
+TIME
+SUM
+WHERE
+IN
+GROUP BY
+ORDER BY
+ALIAS
+
+
+SELECT
+  artist_name AS [Artist],
+  strftime('%Y',date(ts)) AS [Year],
+  time(sum(ms_played/1000),'unixepoch') AS [Total Time Played HH:MM:SS]
+FROM
+  spotify_history
+WHERE
+  [Year] IN ('2023', '2024')
+GROUP BY
+  [Year],
+  [Artist]
+ORDER BY
+  [Total Time Played HH:MM:SS] DESC;
+
+
+2. Which songs have they played the most? How often do they skip them?
+
+Syntax used:
+TIME
+SUM
+COUNT
+WHERE
+WHERE SUBQUERY
+GROUP BY
+ORDER BY
+LIMIT
+ALIAS
+
+
+SELECT
+  track_name AS [Song],
+  artist_name AS [Artist],
+  time(sum(ms_played/1000),'unixepoch') AS [Total Time Played HH:MM:SS],
+  count(skipped) AS [Times Skipped]
+FROM
+  spotify_history
+WHERE
+  track_name IN
+(
+SELECT
+  track_name
+  FROM
+  spotify_history
+  WHERE
+  skipped = "TRUE"
+)
+GROUP BY
+  track_name
+ORDER BY
+  [Total Time Played HH:MM:SS] DESC
+LIMIT 10;
+
+
+3. What time of day do they typically listen to music?
+
+Syntax used:
+TIME
+AVG
+STRFTIME
+ROUND
+ALIAS
+
+
+SELECT
+  time(
+
+  avg((
+
+  strftime('%H',time(ts)) * 3600 +
+
+  strftime('%M',time(ts)) * 60 +
+
+  strftime('%S',time(ts)) -
+
+  ms_played / 1000))
+
+  ,'unixepoch')
+
+  AS [AVERAGE START TIME HH:MM:SS],
+
+  time(
+
+  avg(
+
+  strftime('%H',time(ts)) * 3600 +
+
+  strftime('%M',time(ts)) * 60 +
+
+  strftime('%S',time(ts)))
+
+  ,'unixepoch')
+
+  AS [AVERAGE END TIME HH:MM:SS],
+
+  round(avg(ms_played/1000/60),2) AS [AVERAGE MINUTES PLAYED]
+
+FROM
+  spotify_history;
+
+
+4i). How often do they explore new artists?
+
+Syntax used:
+STRFTIME
+DATE
+COUNT
+WHERE
+IN
+GROUP BY
+ORDER BY
+ALIAS
+
+
+SELECT
+strftime('%d',date(ts)) AS [Day],
+strftime('%m',date(ts)) AS [Month],
+strftime('%Y',date(ts)) AS [Year],
+count(reason_start) AS [Frequency of Exploring New Artists]
+
+FROM
+spotify_history
+
+WHERE
+reason_start IN ('fwdbtn', 'nextbtn')
+
+GROUP BY
+[Day],
+[Month],
+[Year]
+
+ORDER BY
+[Year] DESC;
+
+
+4ii). How often do they replay favorites?
+
+Syntax used:
+STRFTIME
+DATE
+COUNT
+WHERE
+IN
+GROUP BY
+ORDER BY
+ALIAS
+
+
+SELECT
+strftime('%d',date(ts)) AS [Day],
+strftime('%m',date(ts)) AS [Month],
+strftime('%Y',date(ts)) AS [Year],
+count(reason_start) AS [Frequency of Replaying Favourite Artists]
+
+FROM
+spotify_history
+
+WHERE
+reason_start IN ('backbtn')
+
+GROUP BY
+[Day],
+[Month],
+[Year]
+
+ORDER BY
+[Year] DESC;
+
+
+Personal query: Determine the streaming start time and display it with the streaming end time. 
+
+Syntax used:
+TIME
+STRFTIME
+ALIAS
+
+
+SELECT
+  
+  time((
+  
+  strftime('%H',time(ts)) * 3600 +
+  
+  strftime('%M',time(ts)) * 60 +
+  
+  strftime('%S',time(ts)) -
+  
+  ms_played / 1000),'unixepoch') 
+  
+  AS [START HH:MM:SS],
+  
+  time(ts) AS [END HH:MM:SS]
+
+FROM
+  spotify_history;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
