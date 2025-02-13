@@ -4,7 +4,7 @@ Custom SQL querying to tackle the recommended analysis of the Spotify Streaming 
 My approach:
 
 1) Explore the CSV file in Excel by filtering columns to ask questions about the data.
-2) Bring the CSV file into DB Browser and ensure data types.
+2) Bring the CSV file into the RDBMS SQLite and ensure data types.
 3) Query questions from 1).
 4) Query the recommended analysis from Maven.
 
