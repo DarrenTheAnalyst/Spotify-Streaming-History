@@ -3,10 +3,10 @@ Custom SQL querying to tackle the recommended analysis of the Spotify Streaming 
 
 My approach:
 
-1) Explore the CSV file in Excel by filtering columns to ask questions about the data.
-2) Bring the CSV file into the RDBMS SQLite and ensure data types.
-3) Query questions from 1).
-4) Query the recommended analysis from Maven.
+1. Explore the CSV file in Excel by filtering columns to ask questions about the data.
+2. Bring the CSV file into the RDBMS SQLite and ensure data types.
+3. Query questions from 1.
+4. Query the recommended analysis from Maven.
 
 Questions I queried:
 
@@ -17,9 +17,9 @@ Questions I queried:
 
 Maven recommended analysis:
 
-1) Which artist did they listen to the most this year? Is it the same as last year?
-2) Which songs have they played the most? How often do they skip them?
-3) What time of the day do they typically listen to music?
-4) How often do they explore new artists versus replaying favourites?
+1. Which artist did they listen to the most this year? Is it the same as last year?
+2. Which songs have they played the most? How often do they skip them?
+3. What time of the day do they typically listen to music?
+4. How often do they explore new artists versus replaying favourites?
 
 https://mavenanalytics.io/data-playground?order=date_added%2Cdesc&search=spotify%20streaming%20history
