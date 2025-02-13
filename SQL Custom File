@@ -76,9 +76,12 @@ ALIAS
 
 
 SELECT
-  time(
+  time
+(
 
-  avg((
+  avg
+(
+(
 
   strftime('%H',time(ts)) * 3600 +
 
@@ -86,23 +89,30 @@ SELECT
 
   strftime('%S',time(ts)) -
 
-  ms_played / 1000))
+  ms_played / 1000
+)
+)
 
-  ,'unixepoch')
+  ,'unixepoch'
+)
 
   AS [AVERAGE START TIME HH:MM:SS],
 
-  time(
+  time
+(
 
-  avg(
+  avg
+(
 
   strftime('%H',time(ts)) * 3600 +
 
   strftime('%M',time(ts)) * 60 +
 
-  strftime('%S',time(ts)))
+  strftime('%S',time(ts))
+)
 
-  ,'unixepoch')
+  ,'unixepoch'
+)
 
   AS [AVERAGE END TIME HH:MM:SS],
 
@@ -126,24 +136,24 @@ ALIAS
 
 
 SELECT
-strftime('%d',date(ts)) AS [Day],
-strftime('%m',date(ts)) AS [Month],
-strftime('%Y',date(ts)) AS [Year],
-count(reason_start) AS [Frequency of Exploring New Artists]
+  strftime('%d',date(ts)) AS [Day],
+  strftime('%m',date(ts)) AS [Month],
+  strftime('%Y',date(ts)) AS [Year],
+  count(reason_start) AS [Frequency of Exploring New Artists]
 
 FROM
-spotify_history
+  spotify_history
 
 WHERE
-reason_start IN ('fwdbtn', 'nextbtn')
+  reason_start IN ('fwdbtn', 'nextbtn')
 
 GROUP BY
-[Day],
-[Month],
-[Year]
+  [Day],
+  [Month],
+  [Year]
 
 ORDER BY
-[Year] DESC;
+  [Year] DESC;
 
 
 4ii). How often do they replay favorites?
@@ -160,24 +170,24 @@ ALIAS
 
 
 SELECT
-strftime('%d',date(ts)) AS [Day],
-strftime('%m',date(ts)) AS [Month],
-strftime('%Y',date(ts)) AS [Year],
-count(reason_start) AS [Frequency of Replaying Favourite Artists]
+  strftime('%d',date(ts)) AS [Day],
+  strftime('%m',date(ts)) AS [Month],
+  strftime('%Y',date(ts)) AS [Year],
+  count(reason_start) AS [Frequency of Replaying Favourite Artists]
 
 FROM
-spotify_history
+  spotify_history
 
 WHERE
-reason_start IN ('backbtn')
+  reason_start IN ('backbtn')
 
 GROUP BY
-[Day],
-[Month],
-[Year]
+  [Day],
+  [Month],
+  [Year]
 
 ORDER BY
-[Year] DESC;
+  [Year] DESC;
 
 
 Personal query: Determine the streaming start time and display it with the streaming end time. 
@@ -190,7 +200,9 @@ ALIAS
 
 SELECT
   
-  time((
+  time
+(
+(
   
   strftime('%H',time(ts)) * 3600 +
   
@@ -198,7 +210,9 @@ SELECT
   
   strftime('%S',time(ts)) -
   
-  ms_played / 1000),'unixepoch') 
+  ms_played / 1000
+),'unixepoch'
+) 
   
   AS [START HH:MM:SS],
   
