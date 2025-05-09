@@ -1,5 +1,5 @@
 # Spotify-Streaming-History
-Custom SQL querying to tackle the recommended analysis of the Spotify Streaming History dataset from Maven Analytics.
+Custom SQL querying to tackle the recommended analysis of the Spotify Streaming History data from Maven Analytics.
 
 My approach:
 
